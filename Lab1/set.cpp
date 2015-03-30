@@ -406,7 +406,19 @@ Set<T>::Set (T a[], int n)
 template<typename T>
 Set<T>::Set (const Set& b)
 {
-    //ADD CODE
+
+
+    // Create new set
+    // init();
+    //
+    // std::cout << "hehe";
+    //
+    // *this = b;
+
+    init();
+
+    operator=(b);
+
 }
 
 
@@ -422,8 +434,18 @@ Set<T>::~Set ()
 template<typename T>
 const Set<T>& Set<T>::operator=(const Set& b)
 {
-    //ADD CODE
-    return *this; //delete this code
+    clear();
+
+    Node* tmp = b.head->next;
+
+    while(tmp != b.tail){
+
+      insert(tail, tmp->value);
+      tmp = tmp->next;
+
+    }
+
+    return *this;
 }
 
 
@@ -458,7 +480,15 @@ int Set<T>::cardinality() const
 template<typename T>
 void Set<T>::clear()
 {
-    //ADD CODE
+
+    for(Node* tmp = head->next; tmp != tail; tmp = tmp->next){
+
+        erase(tmp);
+
+    }
+
+    counter = 0;
+
 }
 
 //Return true, if the set is a subset of b, otherwise false
@@ -505,6 +535,8 @@ Set<T>& Set<T>::insert(Node *p, T val)
     tail->prev->next = newNode;
     tail->prev = newNode;
 
+    counter++;
+
     return *this;
 }
 
@@ -514,12 +546,9 @@ template<typename T>
 Set<T>& Set<T>::erase(Node *p)
 {
 
-    Node* nodeToRemove = p->next;
-
-    p->next = nodeToRemove->next;
-    nodeToRemove->next->prev = p;
-
-    delete nodeToRemove;
+    p->prev = p->next;
+    p->next = p->prev;
+    delete p;
 
     return *this; //delete this code
 }
@@ -542,7 +571,7 @@ void Set<T>::init()
 template<typename T>
 void Set<T>::print(ostream& os) const
 {
-    // Starts at the value dummy node is pointing at
+    //Starts at the value dummy node is pointing at
     Node* tmp = head->next;
 
     os << "{ ";

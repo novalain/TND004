@@ -51,7 +51,7 @@ int main()
     * Copy constructor                                   *
     ******************************************************/
     cout << "\nTEST PHASE 2: copy constructor\n\n";
-
+    
     Set<int> S5(S1);
 
     cout << "S5 = " << S5 << endl;
