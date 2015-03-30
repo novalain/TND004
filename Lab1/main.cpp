@@ -51,7 +51,7 @@ int main()
     * Copy constructor                                   *
     ******************************************************/
     cout << "\nTEST PHASE 2: copy constructor\n\n";
-    
+
     Set<int> S5(S1);
 
     cout << "S5 = " << S5 << endl;
@@ -121,14 +121,14 @@ int main()
     * TEST PHASE 7                                       *
     * Overloaded operators: insert and delete one element*
     ******************************************************/
-    cout << "\nTEST PHASE 7: insertion and deletion\n\n";
-
-    //Note: conversion constructor is called
-    S4 = 4 + S1 - 5 - 99999;
-    S5 = S2 - 2 + 1 - 99999;
-
-    cout << "S4 = " << S4 << endl;
-    cout << "S5 = " << S5 << endl;
+    // cout << "\nTEST PHASE 7: insertion and deletion\n\n";
+    //
+    // //Note: conversion constructor is called
+    // S4 = 4 + S1 - 5 - 99999;
+    // S5 = S2 - 2 + 1 - 99999;
+    //
+    // cout << "S4 = " << S4 << endl;
+    // cout << "S5 = " << S5 << endl;
 
     /*****************************************************
     * TEST PHASE 8                                       *

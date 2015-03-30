@@ -462,8 +462,15 @@ bool Set<T>::is_empty () const
 template<typename T>
 bool Set<T>::is_member (T val) const
 {
-   //ADD CODE
-   return false; //delete this code
+
+   for(Node* tmp = head->next; tmp != tail; tmp = tmp->next){
+
+      if(tmp->value == val)
+          return true;
+
+   }
+
+   return false;
 }
 
 
@@ -471,8 +478,7 @@ bool Set<T>::is_member (T val) const
 template<typename T>
 int Set<T>::cardinality() const
 {
-    //ADD CODE
-    return 0; //delete this code
+    return counter;
 }
 
 
@@ -594,8 +600,15 @@ void Set<T>::print(ostream& os) const
 template<typename T>
 Set<T> Set<T>::_union(const Set& b) const
 {
-    //ADD CODE
+
+  //  init();
+
+    //Set set;
+
+
+
     return *this; //delete this code
+
 }
 
 
