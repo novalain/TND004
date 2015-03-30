@@ -390,7 +390,15 @@ Set<T>::Set (T n)
 template<typename T>
 Set<T>::Set (T a[], int n)
 {
-    //ADD CODE
+
+    init();
+
+    for(int i = 0; i < n; i++){
+
+      insert(tail, a[i]);
+
+    }
+
 }
 
 
@@ -492,9 +500,9 @@ template<typename T>
 Set<T>& Set<T>::insert(Node *p, T val)
 {
 
-    Node* newNode = new Node(val, tail, head);
+    Node* newNode = new Node(val, tail, tail->prev);
 
-    head->next = newNode;
+    tail->prev->next = newNode;
     tail->prev = newNode;
 
     return *this;
@@ -505,7 +513,14 @@ Set<T>& Set<T>::insert(Node *p, T val)
 template<typename T>
 Set<T>& Set<T>::erase(Node *p)
 {
-    //ADD CODE
+
+    Node* nodeToRemove = p->next;
+
+    p->next = nodeToRemove->next;
+    nodeToRemove->next->prev = p;
+
+    delete nodeToRemove;
+
     return *this; //delete this code
 }
 
