@@ -418,10 +418,9 @@ Set<T>::Set (const Set& b)
 template<typename T>
 Set<T>::~Set ()
 {
-
+    clear();
     delete head;
     delete tail;
-    counter = 0;
 
 }
 
@@ -486,12 +485,18 @@ template<typename T>
 void Set<T>::clear()
 {
 
-    for(Node* tmp = head->next; tmp != tail; tmp = tmp->next){
+    Node* tmp = head->next;
 
+    while(tmp != tail){
+
+        Node* nextNode = tmp->next;
         erase(tmp);
+        tmp = nextNode;
 
     }
-    
+
+    counter = 0;
+
 }
 
 //Return true, if the set is a subset of b, otherwise false
@@ -609,8 +614,6 @@ Set<T>& Set<T>::erase(Node *p)
 {
     p->prev->next = p->next;
     p->next->prev = p->prev;
-
-    counter--;
 
     delete p;
 
