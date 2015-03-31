@@ -407,14 +407,6 @@ template<typename T>
 Set<T>::Set (const Set& b)
 {
 
-
-    // Create new set
-    // init();
-    //
-    // std::cout << "hehe";
-    //
-    // *this = b;
-
     init();
 
     operator=(b);
@@ -426,7 +418,11 @@ Set<T>::Set (const Set& b)
 template<typename T>
 Set<T>::~Set ()
 {
-    //ADD CODE
+
+    delete head;
+    delete tail;
+    counter = 0;
+
 }
 
 
@@ -435,8 +431,6 @@ template<typename T>
 const Set<T>& Set<T>::operator=(const Set& b)
 {
     clear();
-
-    //std::cout << " To add " << b << std::endl;
 
     Node* tmp = b.head->next;
 
@@ -455,8 +449,11 @@ const Set<T>& Set<T>::operator=(const Set& b)
 template<typename T>
 bool Set<T>::is_empty () const
 {
-   //ADD CODE
-   return false; //delete this code
+
+   if(cardinality() == 0)
+      return true;
+
+   return false;
 }
 
 
@@ -494,9 +491,7 @@ void Set<T>::clear()
         erase(tmp);
 
     }
-
-  //  counter = 0;
-
+    
 }
 
 //Return true, if the set is a subset of b, otherwise false
@@ -504,8 +499,34 @@ void Set<T>::clear()
 template<typename T>
 bool Set<T>::operator<=(const Set& b) const
 {
-    //ADD CODE
-    return false; //delete this code
+    if(!(cardinality() <= b.cardinality()))
+        return false;
+
+    Node* tmp = head->next;
+
+    while(tmp != tail){
+
+        Node* tmp2 = b.head->next;
+        bool found = false;
+
+        while(tmp2 != b.tail){
+
+            if(tmp->value == tmp2->value)
+                found = true;
+
+            tmp2 = tmp2->next;
+
+        }
+
+        if(!found)
+            return false;
+
+
+        tmp = tmp->next;
+
+    }
+
+    return true;
 }
 
 
@@ -516,11 +537,18 @@ bool Set<T>::operator==(const Set& b) const
 {
 
     Node* tmp = head->next;
+    Node* tmp2 = b.head->next;
 
-    while(tmp != tail){
+    if(!(cardinality() == b.cardinality()))
+        return false;
 
+    while(tmp != tail && tmp2 != b.tail){
 
-      tmp = tmp->next;
+        if(tmp->value != tmp2->value)
+            return false;
+
+        tmp = tmp->next;
+        tmp2 = tmp2->next;
     }
 
     return true; //delete this code
@@ -532,8 +560,17 @@ bool Set<T>::operator==(const Set& b) const
 template<typename T>
 bool Set<T>::operator<(const Set& b) const
 {
-    //ADD CODE
-    return false; //delete this code
+
+    if(*this <= b){
+
+        if(b <= *this)
+          return false;
+
+        return true;
+
+    }
+
+    return false;
 }
 
 
@@ -545,6 +582,15 @@ bool Set<T>::operator<(const Set& b) const
 template<typename T>
 Set<T>& Set<T>::insert(Node *p, T val)
 {
+
+
+  /*  while(p != head && p->value < val){
+
+        p = p->prev;
+
+    }*/
+
+
 
     Node* newNode = new Node(val, p, p->prev);
 
@@ -615,21 +661,30 @@ Set<T> Set<T>::_union(const Set& b) const
 
     Set set = *this;
 
-  //  std::cout << "this: " << set << std::endl << "b: " << b << std::endl;
-
     Node* tmp = b.head->next;
 
     while(tmp != b.tail){
 
-        if(!is_member(tmp->value))
-            set.insert(set.tail, tmp->value);
+        // To not duplicate values
+        if(!is_member(tmp->value)){
+
+            Node* searchNode = set.head->next;
+
+            while(searchNode != set.tail && searchNode->value < tmp->value){
+
+                searchNode = searchNode->next;
+
+            }
+
+            set.insert(searchNode, tmp->value);
+
+        }
 
         tmp = tmp->next;
 
     }
-  //  std::cout << "SEEEETT 2" << set << std::endl;
 
-    return set; //delete this code
+    return set;
 
 }
 
@@ -639,7 +694,6 @@ Set<T> Set<T>::_union(const Set& b) const
 template<typename T>
 Set<T> Set<T>::_intersection(const Set& b) const
 {
-    //ADD CODE
     Set set;
 
     Node* tmp = head->next;
