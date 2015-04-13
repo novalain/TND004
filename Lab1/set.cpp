@@ -416,8 +416,8 @@ Set<T>::Set (const Set& b)
     // *this = b;
 
     init();
-
     operator=(b);
+
 
 }
 
@@ -434,18 +434,25 @@ Set<T>::~Set ()
 template<typename T>
 const Set<T>& Set<T>::operator=(const Set& b)
 {
+
     clear();
 
+
+
     Node* tmp = b.head->next;
+
 
     while(tmp != b.tail){
 
       insert(tail, tmp->value);
       tmp = tmp->next;
 
+
     }
 
-    return *this;
+   return *this;
+
+
 }
 
 
@@ -495,6 +502,7 @@ void Set<T>::clear()
 
     counter = 0;
 
+
 }
 
 //Return true, if the set is a subset of b, otherwise false
@@ -536,14 +544,14 @@ template<typename T>
 Set<T>& Set<T>::insert(Node *p, T val)
 {
 
-    Node* newNode = new Node(val, tail, tail->prev);
+    Node* newNode = new Node(val, p, p->prev);
 
     tail->prev->next = newNode;
     tail->prev = newNode;
 
     counter++;
 
-    return *this;
+
 }
 
 
@@ -552,11 +560,18 @@ template<typename T>
 Set<T>& Set<T>::erase(Node *p)
 {
 
-    p->prev = p->next;
-    p->next = p->prev;
+
+    p->prev->next = p->next;
+    p->next->prev = p->prev;
+
+    counter--;
+
     delete p;
 
-    return *this; //delete this code
+    return *this;
+
+
+
 }
 
 //Create an empty Set

@@ -1,0 +1,30 @@
+# depslib dependency file v1.0
+1424879446 source:d:\dokument\progrmmering\tnd004\lab2\collisions.cpp
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<random>
+
+1426282864 source:d:\dokument\progrmmering\tnd004\lab2\hashtable.cpp
+	<assert.h>
+	<iomanip>
+	"hashTable.h"
+
+1426430806 d:\dokument\progrmmering\tnd004\lab2\hashtable.h
+	"item.h"
+	<iostream>
+
+1426283614 d:\dokument\progrmmering\tnd004\lab2\item.h
+	<iostream>
+	<string>
+	<iomanip>
+	<new>
+
+1426175968 source:d:\dokument\progrmmering\tnd004\lab2\item.cpp
+	"Item.h"
+
+1426282952 source:d:\dokument\progrmmering\tnd004\lab2\test.cpp
+	<iostream>
+	<string>
+	"hashTable.h"
+
