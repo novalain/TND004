@@ -519,24 +519,10 @@ bool Set<T>::operator<=(const Set& b) const
 
     while(tmp != tail){
 
-        Node* tmp2 = b.head->next;
-        bool found = false;
+       if(!b.is_member(tmp->value))
+        return false;
 
-        while(tmp2 != b.tail){
-
-            if(tmp->value == tmp2->value)
-                found = true;
-
-            tmp2 = tmp2->next;
-
-        }
-
-        if(!found)
-            return false;
-
-
-        tmp = tmp->next;
-
+       tmp = tmp->next;
     }
 
     return true;
