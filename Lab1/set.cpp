@@ -661,26 +661,20 @@ Set<T> Set<T>::_union(const Set& b) const
     Set thisSet = *this;
 
     Node* tmp = b.head->next;
+    Node* searchNode = thisSet.head->next;
 
     while(tmp != b.tail){
 
         // To not duplicate values
-        if(!is_member(tmp->value)){
-
-            Node* searchNode = thisSet.head->next;
+        if(!thisSet.is_member(tmp->value)){
 
             while(searchNode != thisSet.tail && searchNode->value < tmp->value){
 
                 searchNode = searchNode->next;
-
             }
-
             thisSet.insert(searchNode, tmp->value);
-
         }
-
         tmp = tmp->next;
-
     }
 
     return thisSet;
