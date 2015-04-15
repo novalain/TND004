@@ -73,6 +73,7 @@ int HashTable::find(string key) const
 // IMPLEMENT
 void HashTable::insert(string key, int v)
 {
+    Item* newItem = new Item(key,v);
 
 }
 

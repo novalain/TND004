@@ -33,7 +33,6 @@
 		</Compiler>
 		<Unit filename="Item.cpp" />
 		<Unit filename="Item.h" />
-		<Unit filename="collisions.cpp" />
 		<Unit filename="hashTable.cpp" />
 		<Unit filename="hashTable.h" />
 		<Unit filename="test.cpp" />
