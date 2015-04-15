@@ -658,7 +658,7 @@ template<typename T>
 Set<T> Set<T>::_union(const Set& b) const
 {
 
-    Set set = *this;
+    Set thisSet = *this;
 
     Node* tmp = b.head->next;
 
@@ -667,15 +667,15 @@ Set<T> Set<T>::_union(const Set& b) const
         // To not duplicate values
         if(!is_member(tmp->value)){
 
-            Node* searchNode = set.head->next;
+            Node* searchNode = thisSet.head->next;
 
-            while(searchNode != set.tail && searchNode->value < tmp->value){
+            while(searchNode != thisSet.tail && searchNode->value < tmp->value){
 
                 searchNode = searchNode->next;
 
             }
 
-            set.insert(searchNode, tmp->value);
+            thisSet.insert(searchNode, tmp->value);
 
         }
 
@@ -683,7 +683,7 @@ Set<T> Set<T>::_union(const Set& b) const
 
     }
 
-    return set;
+    return thisSet;
 
 }
 
