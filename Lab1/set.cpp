@@ -582,15 +582,6 @@ template<typename T>
 Set<T>& Set<T>::insert(Node *p, T val)
 {
 
-
-  /*  while(p != head && p->value < val){
-
-        p = p->prev;
-
-    }*/
-
-
-
     Node* newNode = new Node(val, p, p->prev);
 
     p->prev->next = newNode;
@@ -668,10 +659,10 @@ Set<T> Set<T>::_union(const Set& b) const
         // To not duplicate values
         if(!thisSet.is_member(tmp->value)){
 
-            while(searchNode != thisSet.tail && searchNode->value < tmp->value){
+           // while(searchNode != thisSet.tail && searchNode->value < tmp->value){
 
-                searchNode = searchNode->next;
-            }
+             //   searchNode = searchNode->next;
+            //}
             thisSet.insert(searchNode, tmp->value);
         }
         tmp = tmp->next;
