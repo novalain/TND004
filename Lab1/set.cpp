@@ -515,14 +515,23 @@ bool Set<T>::operator<=(const Set& b) const
     if(!(cardinality() <= b.cardinality()))
         return false;
 
-    Node* tmp = head->next;
+    Node* tmp_one = head->next;
+    Node* tmp_b = b.head->next;
 
-    while(tmp != tail){
 
-       if(!b.is_member(tmp->value))
-        return false;
+    while(tmp_one != tail){
 
-       tmp = tmp->next;
+       if(tmp_one->value == tmp_b->value ){
+            tmp_one = tmp_one->next;
+            tmp_b = tmp_b->next;
+       }
+       else if(tmp_one->value > tmp_b->value){
+            tmp_b = tmp_b->next;
+       }
+       else{
+         return false;
+       }
+
     }
 
     return true;
