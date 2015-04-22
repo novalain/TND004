@@ -39,7 +39,19 @@ int nextPrime( int n )
 HashTable::HashTable(int table_size, HASH f)
     : size(nextPrime(table_size)), h(f), nItems(0)
 {
-    hTable = nullptr; //to be deleted
+    hTable = new Item* [size];
+    for(int i = 0; i < size; i++){
+       hTable[i] = nullptr;
+    }
+    cout << size << endl;
+    cout << table_size << endl;
+    cout << nItems << endl;
+    cout << h << endl;
+    cout << f[0] << endl ;
+   // cout << hTable[0]->value << endl;
+   // cout << hTable[1]->key << endl;
+   // cout << hTable[1]->key << endl;
+
 }
 
 
@@ -63,6 +75,15 @@ double HashTable::loadFactor() const
 // IMPLEMENT
 int HashTable::find(string key) const
 {
+    int hKey = h(key, size);
+
+
+    int i =0;
+    while(i != nItems ){
+        if(hTable[hKey] == nullptr)
+        cout << "hej" << endl;
+        i++;
+    }
     return NOT_FOUND; //to be deleted
 }
 
@@ -73,7 +94,15 @@ int HashTable::find(string key) const
 // IMPLEMENT
 void HashTable::insert(string key, int v)
 {
+    int hKey = h(key, size);
+    /*cout << hKey << endl;
     Item* newItem = new Item(key,v);
+    HASH f;
+    if (find(key) != NOT_FOUND)
+    {
+    }*/
+
+
 
 }
 
