@@ -515,14 +515,23 @@ bool Set<T>::operator<=(const Set& b) const
     if(!(cardinality() <= b.cardinality()))
         return false;
 
-    Node* tmp = head->next;
+    Node* tmp_one = head->next;
+    Node* tmp_b = b.head->next;
 
-    while(tmp != tail){
 
-       if(!b.is_member(tmp->value))
-        return false;
+    while(tmp_one != tail){
 
-       tmp = tmp->next;
+       if(tmp_one->value == tmp_b->value ){
+            tmp_one = tmp_one->next;
+            tmp_b = tmp_b->next;
+       }
+       else if(tmp_one->value > tmp_b->value){
+            tmp_b = tmp_b->next;
+       }
+       else{
+         return false;
+       }
+
     }
 
     return true;
@@ -649,26 +658,42 @@ template<typename T>
 Set<T> Set<T>::_union(const Set& b) const
 {
 
-    Set thisSet = *this;
+    Set newSet;
 
-    Node* tmp = b.head->next;
-    Node* searchNode = thisSet.head->next;
+    Node* tmp_b = b.head->next;
+    Node* tmp_one = head->next;
 
-    while(tmp != b.tail){
+    while(tmp_b != b.tail && tmp_one != tail){
 
-        // To not duplicate values
-        if(!thisSet.is_member(tmp->value)){
+            if (tmp_b->value < tmp_one->value){
+                newSet.insert(newSet.tail, tmp_b->value);
+                tmp_b = tmp_b->next;
+            }
+            else if (tmp_b->value > tmp_one->value){
+                newSet.insert(newSet.tail, tmp_one->value);
+                tmp_one = tmp_one->next;
+            }
+            //if the values was equal
+            else{
+                newSet.insert(newSet.tail, tmp_one->value);
+                tmp_one = tmp_one->next;
+                tmp_b = tmp_b->next;
+            }
 
-           // while(searchNode != thisSet.tail && searchNode->value < tmp->value){
-
-             //   searchNode = searchNode->next;
-            //}
-            thisSet.insert(searchNode, tmp->value);
-        }
-        tmp = tmp->next;
     }
 
-    return thisSet;
+    //insert all the remaining values
+    while(tmp_b != b.tail){
+        newSet.insert(newSet.tail, tmp_b->value);
+        tmp_b = tmp_b->next;
+    }
+
+    while(tmp_one != tail){
+        newSet.insert(newSet.tail, tmp_one->value);
+        tmp_one = tmp_one->next;
+    }
+
+    return newSet;
 
 }
 
@@ -678,19 +703,31 @@ Set<T> Set<T>::_union(const Set& b) const
 template<typename T>
 Set<T> Set<T>::_intersection(const Set& b) const
 {
-    Set set;
 
-    Node* tmp = head->next;
+    Set newSet;
 
-    while(tmp != tail){
+    Node* tmp_b = b.head->next;
+    Node* tmp_one = head->next;
 
-        if(b.is_member(tmp->value))
-            set.insert(set.tail, tmp->value);
-        tmp = tmp->next;
+    while(tmp_b != b.tail && tmp_one != tail){
+
+        //insert if value is equal
+        if(tmp_one->value == tmp_b->value){
+            newSet.insert(newSet.tail, tmp_b->value);
+            tmp_b = tmp_b->next;
+            tmp_one = tmp_one->next;
+        }
+        else if(tmp_one->value > tmp_b->value){
+            tmp_b = tmp_b->next;
+        }
+        else{
+            tmp_one = tmp_one->next;
+
+        }
 
     }
 
-    return set; //delete this code
+    return newSet; //delete this code
 }
 
 
@@ -700,20 +737,30 @@ template<typename T>
 Set<T> Set<T>::_difference(const Set& b) const
 {
 
-    Set set;
+    Set newSet;
 
-    Node* tmp = this->head->next;
+    Node* tmp_b = b.head->next;
+    Node* tmp_one = head->next;
 
-    while(tmp != this->tail){
+    while(tmp_b != b.tail && tmp_one != tail){
 
-        if(!b.is_member(tmp->value))
-            set.insert(set.tail, tmp->value);
+        //insert if value is not equal
+        if(tmp_one->value != tmp_b->value){
+            newSet.insert(newSet.tail, tmp_one->value);
+            tmp_b = tmp_b->next;
+            tmp_one = tmp_one->next;
+        }
+        else if(tmp_one->value > tmp_b->value){
+            tmp_b = tmp_b->next;
+        }
+        else{
+            tmp_one = tmp_one->next;
 
-        tmp = tmp->next;
+        }
 
     }
 
-    return set;
+    return newSet;
 }
 
 
