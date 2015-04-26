@@ -199,6 +199,20 @@ bool HashTable::remove(string key)
 
 }
 
+int HashTable::operator[](const string key){
+
+    int hKey = h(key, size);
+
+    if(find(key) == NOT_FOUND){
+
+        insert(key, 0);
+
+    }
+
+    return find(key);
+
+}
+
 
 void HashTable::display(ostream& os)
 {
@@ -261,7 +275,7 @@ void HashTable::reHash()
 
     }
 
-    size = nextPrime(++size);
+    size = nextPrime(2*size);
     nItems = 0;
     std::cout << "** Rehashing, new size is " << size << std::endl;
 

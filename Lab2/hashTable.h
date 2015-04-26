@@ -138,6 +138,8 @@ public:
     //Display the table for debug and testing purposes
     void display(ostream& os);
 
+    int operator[](string key);
+
 
 private:
     //data members
