@@ -30,7 +30,7 @@ public:
     /** \brief Pointer to an hash function
      *
     */
-    typedef unsigned (*HASH)(string, int); //new type HASH: pointer to a hash function
+    typedef unsigned int (*HASH)(string, int); //new type HASH: pointer to a hash function
 
 
     /** \brief Constructor to create a hash table
@@ -74,7 +74,7 @@ public:
         return nItems;
     }
 
-
+    void hKeyIterate(int& hashKey) const;
 
     /** \brief Search an item in the table
       *
