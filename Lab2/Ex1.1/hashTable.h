@@ -88,6 +88,8 @@ public:
     // IMPLEMENT
     int find(string key) const;
 
+    int findHashKey(string key) const;
+
 
 
     /** \brief Insert an item in the table
@@ -117,6 +119,7 @@ public:
     bool remove(string key);
 
 
+
     /** \brief Display all items in the table T
       *
       * \param os output stream where the table is displayed
@@ -138,7 +141,7 @@ public:
     //Display the table for debug and testing purposes
     void display(ostream& os);
 
-    int operator[](string key);
+    int& operator[](string key);
 
 
 private:

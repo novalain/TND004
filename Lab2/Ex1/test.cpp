@@ -7,13 +7,16 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 
 #include "hashTable.h"
 
 using namespace std;
 
+string CHARS_TO_REMOVE = "(.,!?:\"();\\)";
+
 //A simple hash function
-unsigned my_hash(string s, int tableSize)
+unsigned int my_hash(string s, int tableSize)
 {
     unsigned hashVal = 0;
 
