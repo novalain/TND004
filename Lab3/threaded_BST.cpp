@@ -20,29 +20,33 @@ using namespace std;
 BST_threaded::BST_threaded()
  : counter(0)
 {
-    //ADD CODE
+    root = new Node(std::make_pair("",0), nullptr, nullptr);
 }
 
 
 //destructor
 BST_threaded::~BST_threaded()
 {
-  //ADD CODE
+    // Rewrite this one later
+    delete root;
 }
 
 
 //Test if the tree is empty
 bool BST_threaded::empty() const
 {
-    //ADD CODE
-    return true;
+
+    // If no left or right threads on root then empty right?
+    if(!root->left && !root->right)
+        return true;
+
+    return false;
 }
 
 //Return mumber of keys (elements) stored in the tree
 int BST_threaded::size() const
 {
-   //ADD CODE
-    return 0;
+    return counter;
 }
 
 
@@ -55,7 +59,7 @@ void BST_threaded::insert(ELEMENT v)
         root->left = new Node(v, root, root);
         root->left->l_thread = root->left->r_thread = true;
 
-        root->l_thread = false;
+        root->l_thread = false; // Already false from the constructor?
         counter = 1;
     }
     else
@@ -77,10 +81,22 @@ void BST_threaded::remove(string key)
 //then an ELEMENT (key,0) is inserted and a reference to it is returned
 ELEMENT& BST_threaded::operator[](string key)
 {
-    //ADD CODE
-    static ELEMENT e("", 0); //MUST remove this code
 
-    return e; //MUST remove this code
+    Node* foundNode = root->left->find(key);
+
+    if(!foundNode){
+        insert(std::make_pair(key, 0));
+        return root->left->find(key)->value;
+    }
+
+    else{
+        return foundNode->value;
+    }
+
+    //ADD CODE
+    //static ELEMENT e("", 0); //MUST remove this code
+
+    //return e; //MUST remove this code
 }
 
 
@@ -89,8 +105,15 @@ ELEMENT& BST_threaded::operator[](string key)
 //Otherwise, return this->end().
 BiIterator BST_threaded::find(string key) const
 {
-    //ADD CODE
-    return end();
+    /*Node* foundNode = root->left->find(key);
+
+    if(foundNode)
+        return BiIterator(foundNode);
+
+    std::cout << "20 finns inte???" << std::endl;*/
+
+    return this->end();
+
 }
 
 

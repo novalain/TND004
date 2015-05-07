@@ -25,14 +25,74 @@ Node::~Node()
     //ADD CODE
 }
 
+bool Node::findParentNode(Node*& tempRoot, const string key){
+
+    // Loop through tree
+    while(tempRoot){
+
+        // Value is bigger than root, iterate right
+        if(key > tempRoot->value.first){
+
+            if(tempRoot->r_thread)
+                break;
+
+            tempRoot = tempRoot->right;
+        }
+
+        // Value is less than root, iterate left
+        else if(key < tempRoot->value.first){
+
+            if(tempRoot->l_thread)
+                break;
+
+            tempRoot = tempRoot->left;
+
+        }
+
+        // Same value
+        else
+            return false;
+
+    }
+
+    return true;
+
+}
+
 
 //Insert v in the tree having as root this node
 //Return true, if v was inserted
 //Otherwise, return false --v already exists in the tree
 bool Node::insert(ELEMENT v)
 {
-    //ADD CODE
-    return false;
+    Node* tempRoot = this;
+
+    // If no parent node, same value was found. updating..
+    if ( !findParentNode(tempRoot, v.first) ){
+        tempRoot->value.second++;
+        return false;
+    }
+
+    // Insert node right of the parent node
+    if(v.first > tempRoot->value.first){
+
+        Node *newNode = new Node(v, tempRoot, tempRoot->right);
+        tempRoot->right = newNode;
+        tempRoot->r_thread = false;
+        newNode->r_thread = newNode->l_thread = true;
+
+    }
+
+    // Insert node left of the parent node
+    else{
+
+        Node * newNode = new Node(v, tempRoot->left, tempRoot);
+        tempRoot->left = newNode;
+        tempRoot->l_thread = false;
+        newNode->r_thread = newNode->l_thread = true;
+    }
+
+    return true;
 }
 
 
@@ -72,7 +132,11 @@ void Node::removeMe(Node* parent, bool isRight)
 //If there is no node storing key then return nullptr
 Node* Node::find(string key)
 {
-    //ADD CODE
+    Node* tempRoot = this;
+
+    if (!findParentNode(tempRoot, key))
+        return tempRoot;
+
     return nullptr;
 }
 

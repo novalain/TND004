@@ -167,6 +167,7 @@ private:
     //IMPLEMENT
     Node* findMax();
 
+    bool findParentNode(Node*& tempRoot, const string key);
 
 
     /** \brief Display the key stored in each node, using inorder traversal of tree T, where T is the sub-tree with root this node.
