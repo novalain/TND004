@@ -67,7 +67,7 @@ bool Node::traverseToKey(Node*& tempRoot, const string key) const{
 }
 
 // Traverses the binary tree and returns the value corresponding to the node,
-Node* Node::findParentNode(const string key){
+/*Node* Node::findParentNode(const string key){
 
     Node* traverseNode = this;
 
@@ -100,7 +100,7 @@ Node* Node::findParentNode(const string key){
 
     return traverseNode;
 
-}
+}*/
 
 
 //Insert v in the tree having as root this node
@@ -112,7 +112,7 @@ bool Node::insert(ELEMENT v)
     //findParentNode(tempRoot, v.first);
 
     // Finds the parent node of the node containing key in element.
-    Node* temp = this;
+    /*Node* temp = this;
 
     // If key was value was found, updating..
     if(traverseToKey(temp, v.first)){
@@ -139,32 +139,47 @@ bool Node::insert(ELEMENT v)
 
     }
 
-    // If no parent node, same value was found. updating..
-    /*if ( !findParentNode(tempRoot, v.first) ){
-        tempRoot->value.second++;
+    return true;*/
+
+    // Recursive modell
+    if(v.first > value.first){
+
+        if(r_thread){
+
+            Node* newChild = new Node(v, this, this->right);
+            this->right = newChild;
+            this->r_thread = false;
+            newChild->r_thread = newChild->l_thread = true;
+
+        }
+
+        else
+            return this->right->insert(v);
+    }
+
+    else if (v < value){
+
+        if(l_thread){
+
+            Node* newChild = new Node(v, this->left, this);
+            this->left = newChild;
+            this->l_thread = false;
+            newChild->r_thread = newChild->l_thread = true;
+
+        }
+
+        else
+            return this->left->insert(v);
+    }
+
+    // Same value, updating..
+    else {
+        value.second++;
         return false;
     }
 
-    // Insert node right of the parent node
-    if(v.first > tempRoot->value.first){
-
-        Node *newNode = new Node(v, tempRoot, tempRoot->right);
-        tempRoot->right = newNode;
-        tempRoot->r_thread = false;
-        newNode->r_thread = newNode->l_thread = true;
-
-    }
-
-    // Insert node left of the parent node
-    else{
-
-        Node * newNode = new Node(v, tempRoot->left, tempRoot);
-        tempRoot->left = newNode;
-        tempRoot->l_thread = false;
-        newNode->r_thread = newNode->l_thread = true;
-    }*/
-
     return true;
+
 }
 
 
