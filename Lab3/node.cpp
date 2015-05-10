@@ -142,8 +142,11 @@ bool Node::insert(ELEMENT v)
     return true;*/
 
     // Recursive modell
+
+    // Value bigger then value of node, check in the right subtree
     if(v.first > value.first){
 
+        // If no more nodes in right thread, insert
         if(r_thread){
 
             Node* newChild = new Node(v, this, this->right);
@@ -153,12 +156,15 @@ bool Node::insert(ELEMENT v)
 
         }
 
+        // Keep going right
         else
             return this->right->insert(v);
     }
 
+    // Value smaller then value of node, check in the left subtree
     else if (v < value){
 
+        // If no more nodes to the left, insert
         if(l_thread){
 
             Node* newChild = new Node(v, this->left, this);
@@ -168,6 +174,7 @@ bool Node::insert(ELEMENT v)
 
         }
 
+        // Keep going left
         else
             return this->left->insert(v);
     }
@@ -329,10 +336,23 @@ Node* Node::find(string key)
 {
     Node* tempRoot(this);
 
+    while(true)
+        std::cout << "Tja!! vi måste redovisa denna skitlabben imon!!" << std::endl;
+
     // If key was found return the value
     if (traverseToKey(tempRoot, key))
         return tempRoot;
 
+    /*while(tempRoot && tempRoot->value.first != key){
+
+        if(tempRoot->value.first < key)
+            tempRoot = tempRoot->right;
+
+        else
+            tempRoot = tempRoot->left;
+
+    }
+*/
     return nullptr;
 }
 
