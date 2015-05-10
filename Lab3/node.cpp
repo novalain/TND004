@@ -32,7 +32,7 @@ Node::~Node()
 }
 
 // Traverses towards the value of the key, returns true if key was found.
-bool Node::traverseToKey(Node*& tempRoot, const string key) const{
+/*bool Node::traverseToKey(Node*& tempRoot, const string key) const{
 
     // Loop through tree
     while(tempRoot){
@@ -65,7 +65,7 @@ bool Node::traverseToKey(Node*& tempRoot, const string key) const{
     return false;
 
 }
-
+*/
 // Traverses the binary tree and returns the value corresponding to the node,
 /*Node* Node::findParentNode(const string key){
 
@@ -199,7 +199,7 @@ bool Node::insert(ELEMENT v)
 bool Node::remove(string key, Node* parent, bool isRight)
 {
 
-    // https://www.youtube.com/watch?v=wcIRPqTR3Kc explains it all
+    // https://www.youtube.com/watch?v=wcIRPqTR3Kc for help about this
 
     // If key is smaller than our value keep looking in the left subtree
     if(key < value.first){
@@ -218,9 +218,9 @@ bool Node::remove(string key, Node* parent, bool isRight)
     }
 
     // We arrived at the value
-    else if(key == value.first){
+    else if (key == value.first){
 
-    //    std::cout << "** Trying to remove value " << this->value.first << std::endl;
+        //std::cout << "** Trying to remove value " << this->value.first << std::endl;
 
         // We now have two cases
         // First case: if node has two children
@@ -243,6 +243,7 @@ bool Node::remove(string key, Node* parent, bool isRight)
 
     }
 
+    // Didnt find any value to remove
     return false;
 
 }
@@ -337,23 +338,37 @@ Node* Node::find(string key)
     Node* tempRoot(this);
 
     while(true)
-        std::cout << "Tja!! vi måste redovisa denna skitlabben imon!!" << std::endl;
+        std::cout << "Måste redovisa skitlabben imon!!" << std::endl;
 
-    // If key was found return the value
-    if (traverseToKey(tempRoot, key))
-        return tempRoot;
+    // If key smaller and elements in left tree exists, keep going
+    if(key < tempRoot->value.first){
 
-    /*while(tempRoot && tempRoot->value.first != key){
-
-        if(tempRoot->value.first < key)
-            tempRoot = tempRoot->right;
+        if(l_thread)
+            return nullptr;
 
         else
-            tempRoot = tempRoot->left;
+            return tempRoot->left->find(key);
 
     }
-*/
-    return nullptr;
+    // If key larger and elements in right tree exists, keep going
+    else if(key > tempRoot->value.first){
+
+        if(r_thread)
+            return nullptr;
+
+        else
+            return tempRoot->right->find(key);
+
+    }
+
+    // Elements must be the same => FOUND!
+    else
+        return tempRoot;
+
+    // If key was found return the value
+    /*if (traverseToKey(tempRoot, key))
+        return tempRoot;*/
+
 }
 
 
