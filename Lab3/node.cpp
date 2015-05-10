@@ -74,8 +74,6 @@ Node* Node::findParentNode(const string key){
     // Loop through tree
     while(traverseNode){
 
-    //    std::cout << "TRAVERSENODE VALUE FIRST" << traverseNode->value.first << std::endl;
-
         // Value is bigger than node, iterate right
         if(key > traverseNode->value.first){
 
@@ -97,9 +95,6 @@ Node* Node::findParentNode(const string key){
                 traverseNode = traverseNode->left;
 
         }
-
-        //else
-        //    std::cout << "Something is wrong in the findParentNode function" << std::endl;
 
     }
 
@@ -182,59 +177,53 @@ bool Node::insert(ELEMENT v)
 bool Node::remove(string key, Node* parent, bool isRight)
 {
 
-    Node* nodeToRemove = find(key);
+    // https://www.youtube.com/watch?v=wcIRPqTR3Kc explains it all
 
-    if(!nodeToRemove)
-        return false;
+    // If key is smaller than our value keep looking in the left subtree
+    if(key < value.first){
 
-    isRight ? parent = parent->right : parent = parent->left;
-
-    std::cout << "Trying to remove node with value: " << nodeToRemove->value.first << std::endl;
-    std::cout << "Root is right now " << parent->value.first << std::endl;
-
-    // We now have two cases
-    // First case: if node has two children
-    if(!nodeToRemove->l_thread && !nodeToRemove->r_thread){
-
-        // Find the node that is next biggest (exists in the right subtree)
-        Node* nextBiggest = nodeToRemove->right->findMin();
-
-        //Update value of the old node
-        nodeToRemove->value = nextBiggest->value;
-
-        std::cout << "trying to find parent of " << nextBiggest->value.first << std::endl;
-        std::cout << "root VAL" << tempRoot->value.first << std::endl;
-
-        // Find parent of the next biggest node
-        Node* parentOfNextBiggest = tempRoot->findParentNode(nextBiggest->value.first);
-
-        if(nextBiggest->value.first < parentOfNextBiggest->value.first)
-            nextBiggest->removeMe(parentOfNextBiggest, false);
-
-        else
-            nextBiggest->removeMe(parentOfNextBiggest, true);
+        if(!l_thread)
+             left->remove(key, this, false);
 
     }
 
-    // Second case: node has at most one child
-    else{
+    // If key is bigger than our value keep looking in the right subtree
+    else if(key > value.first){
 
-        return true;
-
-        if(nodeToRemove->value.first < parent->value.first)
-            nodeToRemove->removeMe(parent, false);
-
-        else
-            nodeToRemove->removeMe(parent, true);
+        if(!r_thread)
+             right->remove(key, this, true);
 
     }
 
-    return true;
+    // We arrived at the value
+    else if(key == value.first){
 
+    //    std::cout << "** Trying to remove value " << this->value.first << std::endl;
+
+        // We now have two cases
+        // First case: if node has two children
+        if(!r_thread && !l_thread){
+
+            // Find the node that is next biggest (exists in the right subtree)
+            // Update value of the old node and remove the node with next biggest value
+            value = left->findMax()->value;
+            return left->remove(value.first, this, false);
+
+        }
+
+        // Second case: node has one, or no child
+        else{
+
+            removeMe(parent, isRight);
+            return true;
+
+        }
+
+    }
+
+    return false;
 
 }
-
-
 
 //Remove this node -- this node has at most one child
 //isRight==false: this node is left child of parent
@@ -251,51 +240,56 @@ void Node::removeMe(Node* parent, bool isRight)
     // If node is a leaf (no children)
     if(l_thread && r_thread){
 
-        // Right of parent
+        //2c: a right child with no children
         if(isRight){
-            // Point where leaf is pointing
-            parent->right = this->right;
             parent->r_thread = true;
-            delete this;
+            parent->right = this->right;
         }
 
+        //1c: a left child with no children
         else{
-
-            parent->left = this->left;
             parent->l_thread = true;
-            delete this;
-
+            parent->left = this->left;
         }
 
     }
 
-    // If node has one child
     else{
-
+        //2b: a right child with only a left child
         if(isRight && r_thread){
 
-            parent->right = this->right;
-            delete this;
+            parent->right = this->left;
+
+            // redirect the last "dummy thread" to point where the removed node was pointing
+            Node *temp = parent->right->findMax();
+            temp->right = this->right;
 
         }
-
+        //2a: a right child with only a right child
         else if (isRight && l_thread){
 
-            parent->right = this->left;
-            delete this;
+            parent->right = this->right;
+            Node *temp = parent->right->findMin();
+            temp->left = this->left;
 
         }
 
+        //1b: a left child with only a left child
         else if(!isRight && r_thread){
 
             parent->left = this->left;
-            delete this;
+            Node *temp =  parent->left->findMax();
+            temp->right = this->right;
+
         }
 
+        //1a: a left child with only a right child
         else if (!isRight && l_thread){
 
             parent->left = this->right;
-            delete this;
+            Node *temp = parent->left->findMin();
+            temp->left = this->left;
+
         }
 
         else{
@@ -303,6 +297,10 @@ void Node::removeMe(Node* parent, bool isRight)
             std::cout << "Something is wrong in the removeMe function" << std::endl;
 
         }
+
+        // Set flags to true to prevent recursive delete of the whole tree
+        l_thread = r_thread = true;
+        delete this;
 
     }
 
@@ -328,7 +326,7 @@ Node* Node::find(string key)
 //of the tree whose root is this node
 Node* Node::findMin()
 {
-
+/*
     Node* minNode = this;
 
     while(minNode){
@@ -345,7 +343,12 @@ Node* Node::findMin()
 
     }
 
-    return minNode;
+    return minNode;*/
+
+    if(!l_thread)
+        return this->left->findMin();
+
+    return this;
 
 }
 
@@ -354,23 +357,10 @@ Node* Node::findMin()
 //of the tree whose root is this node
 Node* Node::findMax()
 {
-    Node* maxNode = this;
+    if(!r_thread)
+        return this->right->findMax();
 
-    while(maxNode){
-
-        string value = maxNode->value.first;
-
-        if(maxNode->r_thread)
-            break;
-
-        maxNode = maxNode->right;
-
-        if(maxNode->value.first > value)
-            value = maxNode->value.first;
-
-    }
-
-    return maxNode;
+    return this;
 
 }
 

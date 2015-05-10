@@ -136,7 +136,7 @@ int main()
            cout << setw(10) << it->first
                 << setw(12) << it->second << endl;
       }
-/*
+
       cout << "\nRemove all ..." << endl;
 
       table.remove("2");
@@ -147,7 +147,7 @@ int main()
       if (table.empty())
           cout << "Table is empty!" << endl << endl;
 
-    cout << "All tests passed successfully!!" << endl << endl;*/
+    cout << "All tests passed successfully!!" << endl << endl;
 
     return 0;
 }

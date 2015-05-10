@@ -29,6 +29,7 @@ BST_threaded::~BST_threaded()
 {
     // Rewrite this one later
     delete root;
+
 }
 
 
@@ -70,8 +71,9 @@ void BST_threaded::insert(ELEMENT v)
 //Remove node with key from the tree
 void BST_threaded::remove(string key)
 {
+    if(root->left->remove(key, root, false))
+        counter--;
 
-    root->left->remove(key, root, false);
 }
 
 
