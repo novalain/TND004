@@ -70,7 +70,8 @@ void BST_threaded::insert(ELEMENT v)
 //Remove node with key from the tree
 void BST_threaded::remove(string key)
 {
-   //ADD CODE
+
+    root->left->remove(key, root, false);
 }
 
 
@@ -84,19 +85,17 @@ ELEMENT& BST_threaded::operator[](string key)
 
     Node* foundNode = root->left->find(key);
 
+    // If not found, inserting new value
     if(!foundNode){
         insert(std::make_pair(key, 0));
         return root->left->find(key)->value;
     }
 
+    // Else, returns a reference to the value
     else{
         return foundNode->value;
     }
 
-    //ADD CODE
-    //static ELEMENT e("", 0); //MUST remove this code
-
-    //return e; //MUST remove this code
 }
 
 
@@ -105,14 +104,12 @@ ELEMENT& BST_threaded::operator[](string key)
 //Otherwise, return this->end().
 BiIterator BST_threaded::find(string key) const
 {
-    /*Node* foundNode = root->left->find(key);
+    Node* foundNode = root->left->find(key);
 
     if(foundNode)
         return BiIterator(foundNode);
 
-    std::cout << "20 finns inte???" << std::endl;*/
-
-    return this->end();
+    return end();
 
 }
 
@@ -120,8 +117,11 @@ BiIterator BST_threaded::find(string key) const
 //Return an iterator referring to the first node in the inorder traversal of the BST
 BiIterator BST_threaded::begin() const
 {
-    //ADD CODE
-    return end();
+    Node* firstNode = root->left->findMin();
+    BiIterator it(firstNode);
+
+    return it;
+
 }
 
 

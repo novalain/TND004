@@ -62,6 +62,20 @@ class BST_threaded
      //IMPLEMENT
     bool empty() const;
 
+    // ADDED FOR DEBUG PURPOSES
+    string findMin() const{
+
+        return root->left->findMin()->value.first;
+
+    }
+
+    string findMax() const{
+
+        return root->left->findMax()->value.first;
+
+    }
+
+
 
     /** \brief Get number of keys (ELEMENTS) stored in the BST.
     *

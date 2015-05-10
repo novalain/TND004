@@ -55,6 +55,10 @@ int main()
       table.display();
       cout << endl;
 
+      // For debug purposes
+      /*cout << "findmin: " << table.findMin() << std::endl;
+      cout << "findmax: " << table.findMax() << std::endl;*/
+
 //    /******************************************************
 //    *PHASE 2: operator[], find(), iterators               *
 //    *******************************************************/
@@ -83,67 +87,67 @@ int main()
 //   /******************************************************
 //   *PHASE 3: iterators                                   *
 //   *******************************************************/
-//    cout << "\n**TEST PHASE 3: iterators up and down"
-//         << endl << endl;
-//
-//    cout << "\n\nTable sorted increasingly..."
-//         << endl << endl;
-//
-//    BiIterator it = table.begin();
-//
-//    cout << "  \tKEY" << "\tCOUNTER" << endl;
-//    cout << "==============================\n";
-//    for( ; it != table.end(); it++)
-//    {
-//         cout << setw(10) << it->first
-//              << setw(12) << it->second << endl;
-//    }
-//
-//    cout << "\n\nTable sorted decreasingly..." << endl << endl;
-//
-//    it = table.find("8");
-//
-//    cout << "  \tKEY" << "\tCOUNTER" << endl;
-//    cout << "==============================\n";
-//    for( ; it != table.end(); it--)
-//    {
-//         cout << setw(10) << it->first
-//              << setw(12) << it->second << endl;
-//    }
-//
+      cout << "\n**TEST PHASE 3: iterators up and down"
+           << endl << endl;
+
+      cout << "\n\nTable sorted increasingly..."
+           << endl << endl;
+
+      BiIterator it = table.begin();
+
+      cout << "  \tKEY" << "\tCOUNTER" << endl;
+      cout << "==============================\n";
+      for( ; it != table.end(); it++)
+     {
+           cout << setw(10) << it->first
+                << setw(12) << it->second << endl;
+      }
+
+      cout << "\n\nTable sorted decreasingly..." << endl << endl;
+
+      it = table.find("8");
+
+      cout << "  \tKEY" << "\tCOUNTER" << endl;
+      cout << "==============================\n";
+      for( ; it != table.end(); it--)
+      {
+           cout << setw(10) << it->first
+                << setw(12) << it->second << endl;
+      }
+
 //   /******************************************************
 //   *PHASE 4: remove                                      *
 //   *******************************************************/
-//    cout << "\n**TEST PHASE 4: remove" << endl << endl;
-//
-//    table.remove("6");
-//    table.remove("5");
-//    table.remove("7");
-//
-//    cout << "\n\nTable sorted increasingly after removing 5, 6, and 7..."
-//         << endl << endl;
-//
-//    it = table.begin();
-//
-//    cout << "  \tKEY" << "\tCOUNTER" << endl;
-//    cout << "==============================\n";
-//    for( ; it != table.end(); it++)
-//    {
-//         cout << setw(10) << it->first
-//              << setw(12) << it->second << endl;
-//    }
-//
-//    cout << "\nRemove all ..." << endl;
-//
-//    table.remove("2");
-//    table.remove("4");
-//    table.remove("8");
-//    table.remove("100");
-//
-//    if (table.empty())
-//        cout << "Table is empty!" << endl << endl;
+      cout << "\n**TEST PHASE 4: remove" << endl << endl;
 
-    cout << "All tests passed successfully!!" << endl << endl;
+      table.remove("6");
+      table.remove("5");
+      table.remove("7");
+
+      cout << "\n\nTable sorted increasingly after removing 5, 6, and 7..."
+           << endl << endl;
+
+      it = table.begin();
+
+      cout << "  \tKEY" << "\tCOUNTER" << endl;
+      cout << "==============================\n";
+      for( ; it != table.end(); it++)
+      {
+           cout << setw(10) << it->first
+                << setw(12) << it->second << endl;
+      }
+/*
+      cout << "\nRemove all ..." << endl;
+
+      table.remove("2");
+      table.remove("4");
+      table.remove("8");
+      table.remove("100");
+
+      if (table.empty())
+          cout << "Table is empty!" << endl << endl;
+
+    cout << "All tests passed successfully!!" << endl << endl;*/
 
     return 0;
 }

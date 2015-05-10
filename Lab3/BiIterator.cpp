@@ -23,65 +23,86 @@ BiIterator::BiIterator(Node *ptr)
 
 
 //Dereferencing operator
-/*
+
 ELEMENT& BiIterator::operator*() const
 {
-    //ADD CODE
+    return this->current->value;
 }
-*/
+
 
 //Member access operator
 ELEMENT* BiIterator::operator->() const
 {
-    //ADD CODE
-    return nullptr;
+    ELEMENT* e = &this->current->value;
+
+    return e;
 }
 
 
 //Equality comparison operator
 bool BiIterator::operator==(const BiIterator &it) const
 {
-    //ADD CODE
-    return false;
+    return this->current->value == it.current->value;
 }
 
 
 //Inequality comparison operator
 bool BiIterator::operator!=(const BiIterator &it) const
 {
-   //ADD CODE
-    return false;
+    return this->current->value != it.current->value;
 }
-
 
 //Pre increment operator
 BiIterator& BiIterator::operator++()
 {
-   //ADD CODE
+    // If no right subtree, proceed to next node
+    if(this->current->r_thread)
+        this->current = this->current->right;
+
+    // Find minimum value in the right subtree
+    else
+        this->current = this->current->right->findMin();
+
     return *this;
+
 }
-
-
 
 //Pos increment operator: see page 277 and 278 of C++ direkt
 BiIterator BiIterator::operator++(int)
 {
-   //ADD CODE
-    return *this;
+    BiIterator tempIterator(*this); // Make a copy for the result
+
+    ++(*this); // Let pre increment do the work
+
+    return tempIterator; // Return the old value
+
 }
 
 //Pre decrement operator
 BiIterator& BiIterator::operator--()
 {
-   //ADD CODE
+    // If node has no left subtree, just reverse to node before
+    if(this->current->l_thread)
+        this->current = this->current->left;
+
+    // Find max value in left sub tree
+    else
+        this->current = this->current->left->findMax();
+
     return *this;
+
 }
 
 //Pos decrement operator
 BiIterator BiIterator::operator--(int)
 {
-   //ADD CODE
-    return *this;
+
+    BiIterator tempIterator(*this); // Make a copy for the result
+
+    --(*this); // Let pre decrement do the work
+
+    return tempIterator; // Return old value
+
 }
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
