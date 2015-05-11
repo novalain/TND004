@@ -22,7 +22,7 @@ Node::Node(ELEMENT v, Node *l, Node *r)
 //recursively deletes the nodes in the left_subtree and right-subtree
 Node::~Node()
 {
-    std::cout << "** In node destructor" << std::endl;
+    //std::cout << "** In node destructor" << std::endl;
 
     if(!l_thread)
         delete left;
@@ -226,10 +226,12 @@ bool Node::remove(string key, Node* parent, bool isRight)
         // First case: if node has two children
         if(!r_thread && !l_thread){
 
+        //    std::cout << "** Node appears to have two children" << std::endl;
+
             // Find the node that is next biggest (exists in the right subtree)
             // Update value of the old node and remove the node with next biggest value
-            value = left->findMax()->value;
-            return left->remove(value.first, this, false);
+            value = right->findMin()->value;
+            return right->remove(value.first, this, true);
 
         }
 
@@ -265,12 +267,15 @@ void Node::removeMe(Node* parent, bool isRight)
 
         //2c: a right child with no children
         if(isRight){
+
+            std::cout << "Removing a right child with NO children" << std::endl;
             parent->r_thread = true;
             parent->right = this->right;
         }
 
         //1c: a left child with no children
         else{
+            std::cout << "Removing a left child with  NO children" << std::endl;
             parent->l_thread = true;
             parent->left = this->left;
         }
@@ -281,37 +286,44 @@ void Node::removeMe(Node* parent, bool isRight)
         //2b: a right child with only a left child
         if(isRight && r_thread){
 
+            std::cout << "Removing a right child with a left child";
             parent->right = this->left;
 
             // redirect the last "dummy thread" to point where the removed node was pointing
-            Node *temp = parent->right->findMax();
-            temp->right = this->right;
+            // 36 is supposed to point to 50 which is its inorder successor
+            //this->left->right = parent;
+            this->left->findMax()->right = this->right;
 
         }
         //2a: a right child with only a right child
         else if (isRight && l_thread){
 
+            std::cout << "Removing a right child with a right child";
             parent->right = this->right;
-            Node *temp = parent->right->findMin();
-            temp->left = this->left;
+
+            this->right->findMin()->left = this->left;
+        //    this->right->left = parent;
 
         }
 
         //1b: a left child with only a left child
         else if(!isRight && r_thread){
 
+            std::cout << "Removing a left child with a left child";
             parent->left = this->left;
-            Node *temp =  parent->left->findMax();
-            temp->right = this->right;
+            //this->left->right = parent;
+            this->left->findMax()->right = this->right;
+
 
         }
 
         //1a: a left child with only a right child
         else if (!isRight && l_thread){
 
+            std::cout << "Removing a left child with a right child";
             parent->left = this->right;
-            Node *temp = parent->left->findMin();
-            temp->left = this->left;
+        //    this->right->left = parent;
+            this->right->findMin()->left = this->left;
 
         }
 

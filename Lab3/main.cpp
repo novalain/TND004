@@ -40,8 +40,8 @@ bool isNotAlnum(char c){
 void displayTable(MAP& table){
 
     std::cout << "Frequency table sorted alphabetically..." << std::endl << std::endl
-              << setw(15) << "KEY" << setw(10) << "" << "COUNTER" << std::endl
-              << "=================================" << std::endl;
+            << setw(15) << "KEY" << setw(10) << "" << "COUNTER" << std::endl
+            << "=================================" << std::endl;
 
     BiIterator it = table.begin();
 
@@ -112,9 +112,8 @@ int main()
               << "Number unique words in the file = " << table.size() << std::endl << std::endl;
 
 
-
-
     displayTable(table);
+
 
     /******************************************************
     * PHASE 3: remove all words with counter 1            *
@@ -124,36 +123,75 @@ int main()
     string wait;
     getline(cin, wait);
 
-    /*std::cout << "** Removing values with counter 1 ..." << std::endl;
+    std::vector<string> unique_words(0);
+
+    std::cout << "** Removing values with counter 1 ..." << std::endl;
 
     BiIterator it = table.begin();
 
+    // Iterate through binary tree and store values that should be removed into a vector.
+    // Iterators can't be used for insert and delete.
     while(it != table.end())
     {
+    /*    std::cout << "NODE NAME : " << it->first << std::endl
+                  << "NODE COUNTER " << it->second << std::endl;*/
+
         if(it -> second == 1){
-            table.remove(it->first);
-            count--;
+            unique_words.push_back(it->first);
         }
 
         it++;
 
     }
 
-    std::cout << "Number of words after remove" << count;
+    for(int i = 0; i < unique_words.size(); i++){
 
-    displayTable();*/
+        table.remove(unique_words.at(i));
+        count--;
+    }
 
 
+    std::cout << "Number of words after remove: " << count << std::endl;
 
-
+    displayTable(table);
 
     /***********************************************************
     * PHASE 4: request two words to the user w1 and w2         *
     *          then display all words in the interval [w1,w2]  *
     ************************************************************/
 
-    //ADD CODE
+    string input1, input2;
 
+    std::cout << "Enter two words: ";
+    std::cin >> input1 >> input2;
+
+    std::cout << "Frequency table in [" << input1 << "," << input2 << "]" << std::endl
+              << setw(15) << "KEY" << setw(10) << "" << "COUNTER" << std::endl
+              << "=================================" << std::endl;
+
+    if(table.find(input1) == table.end() || table.find(input2) == table.end() || input2 < input1)
+        std::cout << "One of the input strings does not exist or error inte interval ! " << std::endl;
+
+    else{
+
+        bool print = false;
+
+        for(BiIterator it = table.end(); it != table.begin(); it--){
+
+            if(it->first == input2)
+                print = true;
+
+            if(print){
+                cout << setw(15) << right << it->first
+                     << setw(15) << it->second << endl;
+            }
+
+            if(it->first == input1)
+                print = false;
+
+        }
+
+    }
 
 
     return 0;
