@@ -130,20 +130,17 @@ int main()
     BiIterator it = table.begin();
 
     // Iterate through binary tree and store values that should be removed into a vector.
-    // Iterators can't be used for insert and delete.
+    // Iterators can't be used to insert and delete.
     while(it != table.end())
     {
-    /*    std::cout << "NODE NAME : " << it->first << std::endl
-                  << "NODE COUNTER " << it->second << std::endl;*/
-
-        if(it -> second == 1){
+        if(it -> second == 1)
             unique_words.push_back(it->first);
-        }
 
         it++;
 
     }
 
+    // Now it's ok to remove
     for(int i = 0; i < unique_words.size(); i++){
 
         table.remove(unique_words.at(i));
@@ -170,7 +167,7 @@ int main()
               << "=================================" << std::endl;
 
     if(table.find(input1) == table.end() || table.find(input2) == table.end() || input2 < input1)
-        std::cout << "One of the input strings does not exist or error inte interval ! " << std::endl;
+        std::cout << "ERROR! Input string(s) does not exist in table or interval is not entered as [min, max]" << std::endl;
 
     else{
 

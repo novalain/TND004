@@ -55,7 +55,7 @@ bool BiIterator::operator!=(const BiIterator &it) const
 //Pre increment operator
 BiIterator& BiIterator::operator++()
 {
-    // If no right subtree, proceed to next node
+    // If no right subtree, proceed to next inorder node
     if(this->current->r_thread)
         this->current = this->current->right;
 
