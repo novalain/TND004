@@ -337,9 +337,6 @@ Node* Node::find(string key)
 {
     Node* tempRoot(this);
 
-    while(true)
-        std::cout << "Måste redovisa skitlabben imon!!" << std::endl;
-
     // If key smaller and elements in left tree exists, keep going
     if(key < tempRoot->value.first){
 
@@ -361,14 +358,14 @@ Node* Node::find(string key)
 
     }
 
-    // Elements must be the same => FOUND!
-    else
+    // else the elements is the same => FOUND!
+    else if(key == tempRoot->value.first)
         return tempRoot;
 
     // If key was found return the value
     /*if (traverseToKey(tempRoot, key))
         return tempRoot;*/
-
+    return nullptr;
 }
 
 
@@ -413,8 +410,6 @@ Node* Node::findMax()
     return this;
 
 }
-
-
 
 //Display in inorder all keys
 //stored in the tree whose root is this node

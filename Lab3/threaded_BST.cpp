@@ -85,7 +85,12 @@ void BST_threaded::remove(string key)
 ELEMENT& BST_threaded::operator[](string key)
 {
 
+    if(empty())
+        insert(std::make_pair(key,0));
+
     Node* foundNode = root->left->find(key);
+
+    //std::cout << "value of found node " << foundNode->value.first << std::endl;
 
     // If not found, inserting new value
     if(!foundNode){

@@ -19,18 +19,50 @@
 
 using namespace std;
 
+string CHARS_TO_REMOVE = "(.,!?:\"();\\)";
 
 
 /*******************************
 * 2. Main function             *
 ********************************/
 
+bool isNotAlnum(char c){
+
+    for(int i = 0; i < CHARS_TO_REMOVE.size(); i++){
+        if(c == CHARS_TO_REMOVE[i])
+            return true;
+    }
+
+    return false;
+
+}
+
+void displayTable(MAP& table){
+
+    std::cout << "Frequency table sorted alphabetically..." << std::endl << std::endl
+              << setw(15) << "KEY" << setw(10) << "" << "COUNTER" << std::endl
+              << "=================================" << std::endl;
+
+    BiIterator it = table.begin();
+
+    while(it != table.end())
+    {
+        cout << setw(15) << right << it->first
+             << setw(15) << it->second << endl;
+
+        it++;
+
+    }
+
+}
+
 
 int main()
 {
     MAP table;
 
-    string name;
+    string name, s;
+    int count = 0;
 
     /******************************************************
     * PHASE 0: Load the words in the text file            *
@@ -61,6 +93,8 @@ int main()
 
         if (!s.size()) continue; //skip numbers and punctuation signs
 
+        //std::cout << "s" << s << std::endl;
+
         table[s].second++;  //if s is not in the table then it is inserted
 
         count++;
@@ -74,8 +108,13 @@ int main()
     * - frequency table                                   *
     *******************************************************/
 
-    //ADD CODE
+    std::cout << "\nNumber of words in the file = " << count << std::endl
+              << "Number unique words in the file = " << table.size() << std::endl << std::endl;
 
+
+
+
+    displayTable(table);
 
     /******************************************************
     * PHASE 3: remove all words with counter 1            *
@@ -85,7 +124,26 @@ int main()
     string wait;
     getline(cin, wait);
 
-    //ADD CODE
+    /*std::cout << "** Removing values with counter 1 ..." << std::endl;
+
+    BiIterator it = table.begin();
+
+    while(it != table.end())
+    {
+        if(it -> second == 1){
+            table.remove(it->first);
+            count--;
+        }
+
+        it++;
+
+    }
+
+    std::cout << "Number of words after remove" << count;
+
+    displayTable();*/
+
+
 
 
 
