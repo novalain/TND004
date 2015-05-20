@@ -74,9 +74,8 @@ bool Node::insert(ELEMENT v)
             return this->left->insert(v);
     }
 
-    // Same value, updating..
+    // Same value
     else {
-        value.second++;
         return false;
     }
 
@@ -161,14 +160,14 @@ void Node::removeMe(Node* parent, bool isRight)
         //2c: a right child with no children
         if(isRight){
 
-            std::cout << "Removing a right child with NO children" << std::endl;
+        //    std::cout << "Removing a right child with NO children" << std::endl;
             parent->r_thread = true;
             parent->right = this->right;
         }
 
         //1c: a left child with no children
         else{
-            std::cout << "Removing a left child with  NO children" << std::endl;
+        //    std::cout << "Removing a left child with  NO children" << std::endl;
             parent->l_thread = true;
             parent->left = this->left;
         }
