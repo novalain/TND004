@@ -74,14 +74,15 @@ void Digraph::uwsssp(int s)
     Queue<int> Q;
 
     // For all vertexes in list set dist to infinity and path to 0
-    for(int i = 0; i <= size; ++i){
+    for(int i = 1; i <= size; ++i){
 
+        // Set all other vertices distance to infinity
         i != s ? dist[i] = INFINITY : dist[i] = 0;
         path[i] = 0;
 
     }
 
-    std::cout << "ARR first" << array[1].getFirst()->vertex << std::endl;
+    //std::cout << "ARR first" << array[1].getFirst()->vertex << std::endl;
 
     Q.enqueue(s);
 
@@ -118,9 +119,7 @@ void Digraph::uwsssp(int s)
 
         }
 
-
     }
-
 
 }
 
@@ -133,7 +132,69 @@ void Digraph::pwsssp(int s)
          return;
     }
 
-    // *** TODO ***
+    // init
+    for(int i = 1; i <= size; i++){
+
+        dist[i] = INFINITY;
+        path[i] = 0;
+        done[i] = false;
+
+    }
+
+    dist[s] = 0;
+    done[s] = true;
+
+    // set start to current vertex
+    int currentVertex = s;
+
+    while(true){
+
+        //int d = INFINITY;
+
+        // Gets the first neighbour (if any)
+        Node* neighbour = array[currentVertex].getFirst();
+
+        // For all neighbours
+        while(neighbour){
+
+            std::cout << "Vertex number: " << currentVertex << " has neighbour vertex: " << neighbour->vertex << std::endl;
+
+            // Update neighbour distance if better path (old distance plus new weight)
+            if(!done[neighbour->vertex] && (dist[neighbour->vertex] > dist[currentVertex] + neighbour->weight)){
+
+                std::cout << " dist neighbour vertex " << dist[neighbour->vertex] << "dist current vertex " << dist[currentVertex] << "weight " << neighbour->weight << std::endl;
+
+                dist[neighbour->vertex] = dist[currentVertex] + neighbour->weight;
+                path[neighbour->vertex] = currentVertex;
+
+                //if (dist[neighbour->vertex] < d)
+                //    d = neighbour->vertex;
+
+            }
+
+
+            neighbour = array[currentVertex].getNext();
+
+        }
+
+        done[currentVertex] = true;
+
+        int d = INFINITY;
+
+        // Find smallest undone distance vertex
+        for(int i = 1; i <= size; i++){
+
+            if(!done[i] && dist[i] < d){
+                d = dist[i];
+                currentVertex = i;
+            }
+
+        }
+
+        if(d == INFINITY) break;
+
+    }
+
 }
 
 // print graph
@@ -176,5 +237,22 @@ void Digraph::printPath(int t) const
          return;
     }
 
-    // *** TODO ***
+    int distToTravel = dist[t];
+    Node* neighbour = array[t].getFirst();
+
+    while(neighbour){
+
+
+
+
+    }
+
+
+
+    if(dist[t] )
+
+
+    return;
+
+
 }
