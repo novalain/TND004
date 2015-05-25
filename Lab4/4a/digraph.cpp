@@ -231,28 +231,31 @@ void Digraph::printTree() const
 // print shortest path from s to t
 void Digraph::printPath(int t) const
 {
+
     if (t < 1 || t > size)
     {
          cout << "\nERROR: expected target t in range 1.." << size << " !" << endl;
          return;
     }
 
-    int distToTravel = dist[t];
-    Node* neighbour = array[t].getFirst();
-
-    while(neighbour){
-
-
-
-
+    if(path[t] == 0){
+        std::cout << " " << t << " ";
+        return;
     }
 
+    printPath(path[t]);
+    std::cout << " " << t << " ";
 
+/*
+    int nextVertex = path[t];
+    int totalDist = 1;
 
-    if(dist[t] )
+    std::cout << node->vertex;
 
-
-    return;
+    if(path[t] == 0){
+        std::cout << "(" + dist + ")";
+        return;
+    }*/
 
 
 }
