@@ -1,6 +1,6 @@
 /*********************************************
-* file:	~\tnd004\lab\lab4a\main.cpp          *
-* remark: test program for lab 4 part A      *
+* file:	~\tnd004\lab\lab4b\main.cpp          *
+* remark: test program for lab 4 part B      *
 **********************************************/
 
 #include <iostream>
@@ -10,7 +10,7 @@
 
 using namespace std;
 
-#include "digraph.h"
+#include "graph.h"
 
 // -- FUNCTION DECLARATIONS
 
@@ -18,7 +18,7 @@ int readInt(string prompt);
 
 int menu();
 
-Digraph * readGraph(string fileName);
+Graph * readGraph(string fileName);
 
 // -- MAIN PROGRAM
 
@@ -26,10 +26,9 @@ int main()
 {
     int choice = 0;
     string fileName;
-    int s, t;
 
-    Digraph *G;
-    Digraph *temp;
+    Graph *G = new Graph(1);
+    Graph *temp;
 
     while (choice != 9)
     {
@@ -40,32 +39,23 @@ int main()
                 cout << flush;
                 getline(cin, fileName);
                 temp = readGraph(fileName);
-                if (temp != nullptr)
+                if (temp != NULL)
                 {
-                    //delete G;
+                    delete G;
                     G = temp;
                 }
                 break;
             case 2:
-                s = readInt("Source s    ? ");
-                G->uwsssp(s);
+                cout << endl;
+                G->mstPrim();
                 break;
             case 3:
-                s = readInt("Source s    ? ");
-                G->pwsssp(s);
+                cout << endl;
+                G->mstKruskal();
                 break;
             case 4:
                 cout << endl;
                 G->printGraph();
-                break;
-            case 5:
-                cout << endl;
-                G->printTree();
-                break;
-            case 6:
-                t = readInt("Target t    ? ");
-                cout << "\nShortest path =";
-                G->printPath(t);
                 break;
             case 9:
                 cout << "Bye bye ..." << endl;
@@ -97,28 +87,26 @@ int menu()
     cout << endl;
     cout << "== Menu =======\n";
     cout << "1. readGraph   \n";
-    cout << "2. uwsssp      \n";
-    cout << "3. pwsssp      \n";
+    cout << "2. mstPrim     \n";
+    cout << "3. mstKruskal  \n";
     cout << "4. printGraph  \n";
-    cout << "5. printTree   \n";
-    cout << "6. printPath   \n";
     cout << "9. quit        \n";
     cout << "===============\n";
 
     return readInt("Your choice ? ");
 }
 
-Digraph * readGraph(string fileName)
+Graph * readGraph(string fileName)
 {
     int n, u, v, w;
-    Digraph *temp = nullptr;
+    Graph *temp = NULL;
 
-    ifstream file("digraph1.txt");
+    ifstream file("graph1.txt");
 
     if (file.good())
     {
          file >> n;
-         temp = new Digraph(n);
+         temp = new Graph(n);
 
          while (!file.eof())
          {
