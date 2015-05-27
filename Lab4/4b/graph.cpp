@@ -62,7 +62,7 @@ void Graph::mstPrim() const
 
     assert(size > 1);
 
-    int source = 3, totalWeight = 0;
+    int source = 1, totalWeight = 0;
 
     // Declared on the heap b/c we dont have a constant size of the array (vector should also be fine)
     std::vector<Edge> edges; // Always one edge less than nr of nodes
@@ -74,7 +74,7 @@ void Graph::mstPrim() const
     for(int i = 1; i <= size; i++){
 
         i != source ? dist[i] = INFINITY : dist[i] = 0;
-        i != source ? done[i] = false : done[i] = true;
+        i != source ? done[i] = false : done[i] = false;
         path[i] = 0;
 
     }
@@ -172,8 +172,10 @@ void Graph::mstKruskal() const
 
     }
 
+    delete[] done;
+
     // Debug tree
-    /*for(int i = 0; i < nEdges; i++){
+    /*for(int i = 0; i < 12; i++){
 
         std::cout << H.deleteMin() << std::endl;
 
@@ -186,16 +188,16 @@ void Graph::mstKruskal() const
 
         Edge e = H.deleteMin();
 
-        //std::cout << "** Edge " << e << " deleted from tree" << std::endl;
+        std::cout << "** Edge " << e << " deleted from tree" << std::endl;
 
-        // If the edge doesn't exist in the disjoint set, insert. (we always find the minimum edges first)
+        // If the edge doesn't exist in the disjoint set (no cycles), insert. (we always find the minimum edges first)
         if(D.find(e.head) != D.find(e.tail)){
 
-            //std:cout << "OK, edge inserted " << e << std::endl;
+            std::cout << "OK, edge inserted " << e << std::endl;
             D.join(D.find(e.head), D.find(e.tail));
 
-            //std::cout << "Disjointset is now " << std::endl;
-            //D.print();
+            std::cout << "Disjointset is now " << std::endl;
+            D.print();
             std::cout << e << std::endl;
             totalWeight += e.weight;
 
