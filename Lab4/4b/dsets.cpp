@@ -55,49 +55,19 @@ void DSets::join(int r, int s)
     // simple union
     //array[r]  = s;
 
-    std::cout << "R is: " << r << " S is: " << s << std::endl;
-    std::cout << "ARRA ROOT 1: " << array[r] << " ARRAY ROOT 2: " << array[s] << std::endl;
+    //std::cout << "R is: " << r << " S is: " << s << std::endl;
+    //std::cout << "ARRA ROOT 1: " << array[r] << " ARRAY ROOT 2: " << array[s] << std::endl;
 
     // Compare the number of nodes in tree, add the smallest tree to the biggest
-    if(array[r] > array[s]){
-        array[r] += array[s];
-        array[s] = r;
+    if(array[r] < array[s]){
+        array[r] += array[s]; // Add the size to the biggest subtree
+        array[s] = r;         // Make the Vertex point to the node above
     }
 
     else{
         array[s] += array[r];
         array[r] = s;
     }
-
-
-
-    // array[r] <= array[s]
-
-
-    /*else if (array[r] < array[s]){
-        array[s] += array[r];
-        array[r] = s;
-    }*/
-
-
-
-    // If number of roots in tree are the same, just compare the inserted values
-/*    else{
-
-        if(r > s){
-            array[r] += array[s];
-            array[s] = r;
-        }
-
-        else{
-            array[s] += array[r];
-            array[r] = s;
-        }
-    }*/
-
-
-
-
 
 }
 

@@ -188,15 +188,15 @@ void Graph::mstKruskal() const
 
         Edge e = H.deleteMin();
 
-        std::cout << "** Edge " << e << " deleted from tree" << std::endl;
+        //std::cout << "** Edge " << e << " deleted from tree" << std::endl;
 
         // If the edge doesn't exist in the disjoint set (no cycles), insert. (we always find the minimum edges first)
         if(D.find(e.head) != D.find(e.tail)){
 
-            std::cout << "OK, edge inserted " << e << std::endl;
+            //std::cout << "OK, edge inserted " << e << std::endl;
             D.join(D.find(e.head), D.find(e.tail));
 
-            std::cout << "Disjointset is now " << std::endl;
+            //std::cout << "Disjointset is now " << std::endl;
             D.print();
             std::cout << e << std::endl;
             totalWeight += e.weight;
