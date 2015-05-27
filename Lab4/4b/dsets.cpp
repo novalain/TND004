@@ -55,9 +55,6 @@ void DSets::join(int r, int s)
     // simple union
     //array[r]  = s;
 
-    // *** TODO ***
-    //1. find the size of the tree -> the value of the root
-
     std::cout << "R is: " << r << " S is: " << s << std::endl;
     std::cout << "ARRA ROOT 1: " << array[r] << " ARRAY ROOT 2: " << array[s] << std::endl;
 
@@ -66,13 +63,26 @@ void DSets::join(int r, int s)
         array[r] += array[s];
         array[s] = r;
     }
-    else if (array[r] < array[s]){
+
+    else{
         array[s] += array[r];
         array[r] = s;
     }
 
+
+
+    // array[r] <= array[s]
+
+
+    /*else if (array[r] < array[s]){
+        array[s] += array[r];
+        array[r] = s;
+    }*/
+
+
+
     // If number of roots in tree are the same, just compare the inserted values
-    else{
+/*    else{
 
         if(r > s){
             array[r] += array[s];
@@ -83,7 +93,11 @@ void DSets::join(int r, int s)
             array[s] += array[r];
             array[r] = s;
         }
-    }
+    }*/
+
+
+
+
 
 }
 
@@ -94,17 +108,13 @@ int DSets::find(int x)
     assert(x >= 1 && x <= size);
 
     // simple find
-    if (array[x] < 0)
-    {
+    if (array[x] < 0){
         return x;
     }
-    else
-    {
-        return find(array[x]);
-    }
 
-    // *** TODO ***
-    // find with path compression
+    return array[x] = find(array[x]);
+
+
 }
 
 // just in case ...
