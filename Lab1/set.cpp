@@ -406,11 +406,8 @@ Set<T>::Set (T a[], int n)
 template<typename T>
 Set<T>::Set (const Set& b)
 {
-
     init();
     operator=(b);
-
-
 }
 
 
@@ -429,24 +426,17 @@ Set<T>::~Set ()
 template<typename T>
 const Set<T>& Set<T>::operator=(const Set& b)
 {
-
     clear();
-
-
-
     Node* tmp = b.head->next;
-
 
     while(tmp != b.tail){
 
       insert(tail, tmp->value);
       tmp = tmp->next;
 
-
     }
 
    return *this;
-
 
 }
 
@@ -478,14 +468,12 @@ bool Set<T>::is_member (T val) const
    return false;
 }
 
-
 //Return number of elements in the set
 template<typename T>
 int Set<T>::cardinality() const
 {
     return counter;
 }
-
 
 //Make the set empty
 template<typename T>
@@ -504,7 +492,6 @@ void Set<T>::clear()
 
     counter = 0;
 
-
 }
 
 //Return true, if the set is a subset of b, otherwise false
@@ -517,7 +504,6 @@ bool Set<T>::operator<=(const Set& b) const
 
     Node* tmp_one = head->next;
     Node* tmp_b = b.head->next;
-
 
     while(tmp_one != tail){
 
@@ -536,7 +522,6 @@ bool Set<T>::operator<=(const Set& b) const
 
     return true;
 }
-
 
 //Return true, if the set is equal to set b
 //a == b, iff a <= b and b <= a
@@ -562,12 +547,10 @@ bool Set<T>::operator==(const Set& b) const
     return true; //delete this code
 }
 
-
 //Return true, if the set is a strict subset of S, otherwise false
 //a == b, iff a <= b but not b <= a
 template<typename T>
-bool Set<T>::operator<(const Set& b) const
-{
+bool Set<T>::operator<(const Set& b) const{
 
     if(*this <= b){
 
@@ -580,7 +563,6 @@ bool Set<T>::operator<(const Set& b) const
 
     return false;
 }
-
 
 /****************************************************
 * Private member functions                          *
@@ -597,8 +579,6 @@ Set<T>& Set<T>::insert(Node *p, T val)
     p->prev = newNode;
 
     counter++;
-
-
 }
 
 
@@ -645,7 +625,6 @@ void Set<T>::print(ostream& os) const
       os << tmp->value << " ";
 
     }
-
 
     os << "}";
 

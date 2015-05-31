@@ -1,4 +1,4 @@
-#include <assert.h>
+a#include <assert.h>
 #include <iomanip>
 
 #include "hashTable.h"
@@ -142,7 +142,6 @@ void HashTable::insert(string key, int v)
     if(find(key) == NOT_FOUND){
 
         // Memory leaks ? no destructor to call in class Item
-
         Item* itemToAdd = new Item(key, v);
 
         // If any deleted items, insert value at deleted items position
@@ -153,11 +152,9 @@ void HashTable::insert(string key, int v)
         }
 
         hTable[hKey] = itemToAdd;
-
         nItems++;
 
         //std::cout << "** Load factor is currently " << loadFactor() << std::endl;
-
         if(loadFactor() > MAX_LOAD_FACTOR)
             reHash();
 

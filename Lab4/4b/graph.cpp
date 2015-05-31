@@ -56,6 +56,13 @@ void Graph::removeEdge(int u, int v)
     array[v].remove(u);
 }
 
+
+
+
+
+
+
+
 // Prim's minimum spanning tree algorithm
 void Graph::mstPrim() const
 {
@@ -93,7 +100,6 @@ void Graph::mstPrim() const
 
             }
 
-
             neighbour = array[source].getNext();
 
         }
@@ -114,8 +120,6 @@ void Graph::mstPrim() const
 
         // All neighbour nodes have already been visited
         if(d == INFINITY) break;
-
-        //std::cout << "** Inserting edge: (" << source << ", " << path[source] << ", " << dist[source] << ") " << std::endl;
 
         // Push every edge into a vector
         edges.push_back(Edge(source, path[source], dist[source]));
